@@ -127,6 +127,68 @@
     </section>
 
 <section id="equipe" class="section">
+    <style>
+        /* Estilos específicos para o Grid e as Caixinhas */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Cria o grid automático */
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .member-card {
+            background: rgba(255, 255, 255, 0.03); /* Fundo glass */
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 30px 20px;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(15px); /* Efeito de vidro */
+            transition: all 0.3s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            border-color: #4a90e2; /* Cor de destaque azul */
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .member-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 15px;
+            border: 2px solid #4a90e2;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .member-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Faz a foto não achatar */
+        }
+
+        .member-card h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .member-card span {
+            font-size: 0.65rem;
+            color: #4a90e2;
+            text-transform: uppercase;
+            display: block;
+            line-height: 1.4;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+    </style>
+
     <h2 class="section-title">Nossa <span>Equipe</span></h2>
     <div class="team-grid">
         
@@ -135,7 +197,7 @@
                 <img src="julia.jpg" alt="Júlia Assis">
             </div>
             <h3>Júlia Assis</h3>
-            <span>Programadora Principal, Hardware, Montagem e Artística</span>
+            <span>Programadora Principal, Hard Montagem e Artística</span>
         </div>
 
         <div class="member-card reveal">
@@ -143,7 +205,7 @@
                 <img src="maria.jpg" alt="Maria Eduarda">
             </div>
             <h3>Maria Eduarda</h3>
-            <span>Programadora Secundária, Hardware e Montagem</span>
+            <span>Programadora Secundária e Hard Montagem</span>
         </div>
 
         <div class="member-card reveal">
@@ -186,7 +248,7 @@
             <span>Montagem e Pesquisa</span>
         </div>
 
-        <div class="member-card reveal" style="border: 1px solid rgba(255,255,255,0.2);">
+        <div class="member-card reveal" style="border: 1px solid rgba(255,255,255,0.3);">
             <div class="member-img">
                 <img src="marco.jpg" alt="Marco Paranhos">
             </div>
@@ -194,7 +256,7 @@
             <span>Orientador</span>
         </div>
 
-        <div class="member-card reveal" style="border: 1px solid rgba(255,255,255,0.2);">
+        <div class="member-card reveal" style="border: 1px solid rgba(255,255,255,0.3);">
             <div class="member-img">
                 <img src="laura.jpg" alt="Laura Elizabeth">
             </div>
