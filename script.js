@@ -1,69 +1,59 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. Scroll Suave para Links Internos
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+
+    // 1. Scroll Suave para os links da Navbar
+    document.querySelectorAll('.nav-links a, .btn-contact').forEach(link => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
                 window.scrollTo({
-                    top: target.offsetTop - 80, // Offset para a navbar
+                    top: targetSection.offsetTop - 80,
                     behavior: 'smooth'
                 });
             }
         });
     });
 
-    // 2. Observer para Reveal ao Scroll
-    const observerOptions = {
-        threshold: 0.15
+    // 2. Efeito de Revelação (Reveal) ao rolar a página
+    // Usa a API Intersection Observer para performance
+    const revealOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
     };
 
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                entry.target.classList.add('active');
+                // Para de observar após revelar
+                revealObserver.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, revealOptions);
 
     document.querySelectorAll('.reveal').forEach(el => {
         revealObserver.observe(el);
     });
 
-    // 3. Comportamento da Navbar e Botão Voltar ao Topo
-    const navbar = document.querySelector('.navbar');
-    const backToTop = document.getElementById('backToTop');
-
+    // 3. Efeito Dinâmico na Navbar ao rolar
     window.addEventListener('scroll', () => {
-        // Estilização Navbar
-        if (window.scrollY > 100) {
-            navbar.classList.add('scrolled');
+        const nav = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
         } else {
-            navbar.classList.remove('scrolled');
-        }
-
-        // Visibilidade Voltar ao Topo
-        if (window.scrollY > 500) {
-            backToTop.classList.add('show');
-        } else {
-            backToTop.classList.remove('show');
+            nav.classList.remove('scrolled');
         }
     });
 
-    // Clique Voltar ao Topo
-    backToTop.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+    // 4. Efeito de Parallax suave no objeto flutuante (Foto 1 Style)
+    document.addEventListener('mousemove', (e) => {
+        const glow = document.querySelector('.floating-glow');
+        const moveX = (e.clientX - window.innerWidth / 2) * 0.05;
+        const moveY = (e.clientY - window.innerHeight / 2) * 0.05;
+        
+        glow.style.transform = `translate(${moveX}px, ${moveY}px)`;
     });
 
-    // 4. Sutil Micro-interação nos Cards da Equipe
-    const cards = document.querySelectorAll('.team-card');
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            // Pode adicionar lógica extra de som ou micro-mudança aqui
-        });
-    });
 });
