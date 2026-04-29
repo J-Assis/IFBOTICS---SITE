@@ -3,200 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IFBOTICS | Nem Toda Noiva Chega ao Altar</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>IFBOTICS | Robótica & Sensibilidade</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <nav id="navbar">
-        <div class="container nav-container">
-            <a href="#home" class="logo">IFBOTICS</a>
-            <ul class="nav-links">
-                <li><a href="#sobre">Equipe</a></li>
-                <li><a href="#projeto">O Projeto</a></li>
-                <li><a href="#critica">Denúncia</a></li>
-                <li><a href="#narrativa">Narrativa</a></li>
-                <li><a href="#galeria">Galeria</a></li>
-                <li><a href="#contato">Contato</a></li>
-            </ul>
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
+    <div id="loader"></div>
+
+    <nav class="navbar">
+        <div class="logo">IF<span>BOTICS</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Início</a></li>
+            <li><a href="#equipe">Equipe</a></li>
+            <li><a href="#projeto">Projeto</a></li>
+            <li><a href="#proposito">Propósito</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
     </nav>
 
-    <header id="home" class="hero">
-        <div class="fog-overlay"></div>
-        <div class="hero-content">
-            <h1 class="glitch" data-text="Nem toda noiva chega ao altar.">Nem toda noiva chega ao altar.</h1>
-            <p class="reveal">Algumas são silenciadas antes.</p>
-            <a href="#sobre" class="btn-enter">Entrar</a>
+    <section id="home" class="hero">
+        <div class="hero-content reveal">
+            <p class="subtitle">Equipe de Robótica 2024</p>
+            <h1>A beleza reside na <br><span>precisão do silêncio.</span></h1>
+            <p class="description">Unindo engenharia avançada a uma narrativa de impacto social e consciência.</p>
+            <a href="#projeto" class="btn-primary">Conhecer Projeto</a>
         </div>
-    </header>
+        <div class="scroll-indicator"></div>
+    </section>
 
-    <main>
-        <section id="sobre" class="section">
-            <div class="container">
-                <h2 class="section-title text-center">A Equipe IFBOTICS</h2>
-                <div class="team-grid">
-                    <div class="team-card reveal">
-                        <div class="member-img"></div>
-                        <h3>Ana Silva</h3>
-                        <p>Líder de Projeto</p>
+    <section id="equipe" class="section">
+        <div class="container">
+            <h2 class="section-title reveal">A Equipe</h2>
+            <div class="team-grid">
+                <div class="team-card reveal">
+                    <div class="member-img"></div>
+                    <div class="member-info">
+                        <h3>Nome do Integrante</h3>
+                        <span>Líder de Hardware</span>
+                        <p>Especialista em mecânica e design estrutural.</p>
                     </div>
-                    <div class="team-card reveal">
-                        <div class="member-img"></div>
-                        <h3>Bruno Costa</h3>
-                        <p>Engenheiro Mecânico</p>
-                    </div>
-                    <div class="team-card reveal">
-                        <div class="member-img"></div>
-                        <h3>Carla Mendes</h3>
-                        <p>Programadora Lead</p>
-                    </div>
-                    <div class="team-card reveal">
-                        <div class="member-img"></div>
-                        <h3>Daniel Rocha</h3>
-                        <p>Designer UX/UI</p>
-                    </div>
-                    <div class="team-card reveal">
-                        <div class="member-img"></div>
-                        <h3>Elena Martins</h3>
-                        <p>Eletrônica</p>
-                    </div>
-                    <div class="team-card reveal">
-                        <div class="member-img"></div>
-                        <h3>Felipe Souza</h3>
-                        <p>Pesquisador Social</p>
-                    </div>
-                    <div class="team-card reveal">
-                        <div class="member-img"></div>
-                        <h3>Gabriela Lima</h3>
-                        <p>Comunicação</p>
-                    </div>
-                    <div class="team-card reveal">
-                        <div class="member-img"></div>
-                        <h3>Hugo Oliveira</h3>
-                        <p>Desenvolvedor Web</p>
-                    </div>
+                </div>
+                <div class="team-card reveal">
+                    <div class="member-img"></div>
+                    <div class="member-info"><h3>Membro 02</h3><span>Software</span><p>Desenvolvimento e lógica.</p></div>
+                </div>
+                <div class="team-card reveal">
+                    <div class="member-img"></div>
+                    <div class="member-info"><h3>Membro 03</h3><span>Design</span><p>Identidade visual.</p></div>
+                </div>
+                <div class="team-card reveal">
+                    <div class="member-img"></div>
+                    <div class="member-info"><h3>Membro 04</h3><span>Eletrônica</span><p>Circuitos e sensores.</p></div>
+                </div>
+                </div>
+        </div>
+    </section>
+
+    <section id="proposito" class="section dark-bg">
+        <div class="container narrow">
+            <h2 class="section-title reveal">Propósito Social</h2>
+            <div class="social-impact reveal">
+                <p class="quote">"O silêncio que a tecnologia não deve ignorar."</p>
+                <p>Nossa narrativa explora a melancolia e a denúncia contra o feminicídio. Através da estética inspirada no conceito de 'noivas esquecidas', transformamos robótica em uma ferramenta de conscientização sobre a vida e a dignidade humana.</p>
+                <div class="data-point">
+                    <span class="number">+Impacto</span>
+                    <span class="label">Reflexão através da inovação</span>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="projeto" class="section bg-dark">
-            <div class="container">
-                <div class="split-content">
-                    <div class="text-side reveal">
-                        <h2 class="section-title">O Projeto</h2>
-                        <p>Inspirado na estética de <em>A Noiva Cadáver</em>, nosso robô utiliza a tecnologia para dar voz àquelas que foram silenciadas. Através de movimentos delicados e uma estrutura que remete à fragilidade e resistência, o projeto busca chocar e educar, mostrando que a robótica pode ser uma ferramenta de denúncia social.</p>
-                    </div>
-                    <div class="visual-side reveal">
-                        <div class="project-placeholder">
-                            <div class="cracked-effect"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="critica" class="section">
-            <div class="container text-center">
-                <h2 class="section-title">A Realidade Silenciada</h2>
-                <div class="stats-grid">
-                    <div class="stat-item reveal">
-                        <span class="stat-num">1.568</span>
-                        <p>Feminicídios em 2025</p>
-                    </div>
-                    <div class="stat-item reveal">
-                        <span class="stat-num">4</span>
-                        <p>Vítimas por dia</p>
-                    </div>
-                </div>
-                <div class="quotes">
-                    <blockquote class="reveal">"Onde há medo, não há amor."</blockquote>
-                    <blockquote class="reveal">"O silêncio protege o agressor, a denúncia protege a vítima."</blockquote>
-                </div>
-            </div>
-        </section>
-
-        <section id="narrativa" class="section bg-dark">
-            <div class="container">
-                <h2 class="section-title text-center">Ciclo de um Silenciamento</h2>
-                <div class="timeline">
-                    <div class="timeline-item reveal">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <h3>O Encontro</h3>
-                            <p>O início de um sonho envolto em promessas.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item reveal">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <h3>O Controle</h3>
-                            <p>As primeiras rachaduras na liberdade.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item reveal">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <h3>O Silenciamento</h3>
-                            <p>A voz que se apaga diante da violência.</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item reveal">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <h3>A Memória</h3>
-                            <p>Transformamos a dor em luta por justiça.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="galeria" class="section">
-            <div class="container">
-                <h2 class="section-title text-center">Galeria</h2>
-                <div class="gallery-grid">
-                    <div class="gallery-item reveal"></div>
-                    <div class="gallery-item reveal"></div>
-                    <div class="gallery-item reveal"></div>
-                    <div class="gallery-item reveal"></div>
-                    <div class="gallery-item reveal"></div>
-                    <div class="gallery-item reveal"></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contato" class="section bg-dark">
-            <div class="container text-center">
-                <h2 class="section-title">Contato</h2>
-                <p class="reveal">Junte-se à IFBOTICS nesta causa.</p>
-                <div class="contact-links reveal">
-                    <a href="mailto:contato@ifbotics.com">contato@ifbotics.com</a>
-                    <div class="socials">
-                        <a href="#">Instagram</a>
-                        <a href="#">GitHub</a>
-                        <a href="#">LinkedIn</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container text-center">
-            <p>&copy; 2026 IFBOTICS. Ligue 180 em caso de violência.</p>
+    <footer id="contato">
+        <div class="container">
+            <p>© 2024 IFBOTICS - Tecnologia com Alma.</p>
         </div>
     </footer>
-
-    <button id="back-to-top">↑</button>
 
     <script src="script.js"></script>
 </body>
