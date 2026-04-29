@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IFBOTICS | Noiva Cadáver</title>
+    <title>IFBOTICS | A Noiva Cadáver</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;1,400;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -58,13 +58,17 @@
         .time-card:nth-child(even) { left: 55%; text-align: left; }
         .time-card h4 { color: var(--accent-blue); margin-bottom: 8px; font-size: 1rem; }
         .time-card p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; }
+        .time-card strong { color: #fff; }
 
-        /* Roteiro */
-        .script-window { background: #080a0d; border: 1px solid var(--glass-border); padding: 40px; border-radius: 25px; height: 500px; overflow-y: auto; }
-        .scene { margin-bottom: 35px; padding-left: 15px; border-left: 2px solid var(--accent-blue); }
-        .scene-title { font-size: 0.8rem; text-transform: uppercase; color: var(--accent-blue); margin-bottom: 10px; opacity: 0.7; }
-        .char { font-weight: 800; display: block; margin-top: 10px; color: #fff; }
-        .speech { font-style: italic; color: var(--text-dim); display: block; margin-bottom: 5px; }
+        /* Roteiro Style */
+        .script-window { background: #080a0d; border: 1px solid var(--glass-border); padding: 40px; border-radius: 25px; height: 650px; overflow-y: auto; line-height: 1.6; }
+        .scene { margin-bottom: 45px; padding-left: 20px; border-left: 2px solid var(--accent-blue); }
+        .scene-header { font-size: 0.85rem; font-weight: 800; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; background: rgba(74, 144, 226, 0.1); padding: 5px 10px; display: inline-block; }
+        .action { font-style: italic; color: #7a8a99; margin: 10px 0; font-size: 0.95rem; }
+        .char { font-weight: 800; color: #fff; text-transform: uppercase; margin-top: 15px; display: block; letter-spacing: 1px; }
+        .speech { color: var(--text-dim); display: block; margin-bottom: 8px; padding-left: 10px; }
+        .script-footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #222; }
+        .script-footer h5 { color: var(--accent-blue); margin-bottom: 10px; }
 
         /* Tema e Recursos */
         .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
@@ -76,7 +80,7 @@
         .tabs { display: flex; background: #111; }
         .tab { padding: 12px 20px; cursor: pointer; font-size: 0.75rem; color: var(--text-dim); border-right: 1px solid #222; }
         .tab.active { background: #000; color: var(--accent-blue); }
-        pre { padding: 20px; color: #4a90e2; font-size: 0.8rem; display: none; }
+        pre { padding: 20px; color: #4a90e2; font-size: 0.8rem; display: none; overflow-x: auto; }
         pre.active { display: block; }
         .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .vid { background: #000; border-radius: 15px; aspect-ratio: 16/9; overflow: hidden; border: 1px solid var(--glass-border); }
@@ -96,17 +100,19 @@
         <a href="#" class="logo">IF<span>BOTICS</span></a>
         <ul class="nav-links">
             <li><a href="#equipe">Equipe</a></li>
-            <li><a href="#cronograma">Cronograma</a></li>
+            <li><a href="#tema">Temática</a></li>
             <li><a href="#roteiro">Roteiro</a></li>
-            <li><a href="#tema">Tema</a></li>
-            <li><a href="#modelos">Modelos 3D</a></li>
+            <li><a href="#cronograma">Cronograma</a></li>
+            <li><a href="#modelos">Sistemas</a></li>
         </ul>
     </nav>
 
     <section class="section hero">
-        <div class="reveal">
-            <h1 id="home">IFBOTICS: <em>Noiva Cadáver</em></h1>
-            <p>Uma fusão entre robótica e arte dramática para pautar a denúncia social contra o feminicídio.</p>
+        <div class="hero-content reveal">
+            <p style="letter-spacing: 5px; color: var(--accent-blue); text-transform: uppercase; font-size: 0.7rem; margin-bottom: 10px;">Projeto Artístico 2026</p>
+            <h1>A Noiva <em>Cadáver</em>:<br>Silêncio e Denúncia.</h1>
+            <p>Uma performance robótica que utiliza a estética gótica para pautar a crítica social ao Feminicídio. Engenharia a serviço da consciência.</p>
+            <a href="#roteiro" class="btn" style="background: var(--accent-blue); color: white; padding: 15px 30px; text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 0.8rem;">Ler Roteiro</a>
         </div>
     </section>
 
@@ -121,29 +127,25 @@
             <div class="member-card reveal"><div class="member-img"></div><h3>Álvaro</h3><span>Eletrônica</span></div>
             <div class="member-card reveal"><div class="member-img"></div><h3>Guilherme</h3><span>Mecatrônica</span></div>
             <div class="member-card reveal"><div class="member-img"></div><h3>Membro 8</h3><span>Pesquisa</span></div>
-            <div class="member-card reveal" style="border-color: #fff;"><div class="member-img"></div><h3>Marco Paranhos</h3><span>Orientador</span></div>
-            <div class="member-card reveal" style="border-color: #fff;"><div class="member-img"></div><h3>Laura Elizabeth</h3><span>Orientadora</span></div>
+            <div class="member-card reveal" style="border: 1px solid #fff;"><div class="member-img"></div><h3>Marco Paranhos</h3><span>Orientador</span></div>
+            <div class="member-card reveal" style="border: 1px solid #fff;"><div class="member-img"></div><h3>Laura Elizabeth</h3><span>Orientadora</span></div>
         </div>
     </section>
 
-    <section id="cronograma" class="section">
-        <h2 class="section-title">Cronograma de <span>Execução</span></h2>
-        <div class="timeline reveal">
-            <div class="time-card">
-                <h4>FASE 1: Conceituação (Fev - Abr)</h4>
-                <p>26/02-10/03: Limpeza de lab e levantamento do tema social.<br>11/03-30/03: Pesquisa estética e início da produção dos códigos.<br><strong>10/04: 1ª Apresentação</strong></p>
+    <section id="tema" class="section">
+        <div class="theme-grid reveal">
+            <div>
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 20px;">Temática: <span>Feminicídio</span></h2>
+                <p>O projeto utiliza o arquétipo da Noiva Cadáver para ilustrar o ciclo de violência e o "pra sempre" interrompido pela brutalidade. Uma denúncia visual através da tecnologia.</p>
+                <div class="resources-grid">
+                    <div class="res-box"><h4>Recurso 01</h4><p>Atuadores Lineares</p></div>
+                    <div class="res-box"><h4>Recurso 02</h4><p>Sincronia Áudio-Visual</p></div>
+                    <div class="res-box"><h4>Recurso 03</h4><p>Sensores de Presença</p></div>
+                    <div class="res-box"><h4>Recurso 04</h4><p>Cenografia Interativa</p></div>
+                </div>
             </div>
-            <div class="time-card">
-                <h4>FASE 2: Estética (Abr - Mai)</h4>
-                <p>11/04-30/04: Confecção do figurino e adereços.<br>01/05-10/05: Ensaios de sincronia robô e narrativa.<br><strong>15/05: 2ª Apresentação</strong></p>
-            </div>
-            <div class="time-card">
-                <h4>FASE 3: Performance (Mai - Jul)</h4>
-                <p>16/05-15/06: Ajustes de iluminação e impacto visual.<br>16/06-10/07: Ensaios exaustivos da performance total.<br><strong>17/07: 3ª Apresentação</strong></p>
-            </div>
-            <div class="time-card">
-                <h4>FASE 4: Entrega (Jul - Ago)</h4>
-                <p>18/07-05/08: Implementação de melhorias da banca.<br>14/08: Apresentação artística definitiva.</p>
+            <div style="background: var(--glass-bg); height: 400px; border-radius: 20px; border: 1px solid var(--glass-border); overflow: hidden;">
+                <img src="tema.jpg" alt="A Noiva Cadáver" style="width:100%; height:100%; object-fit:cover; opacity: 0.6;">
             </div>
         </div>
     </section>
@@ -152,54 +154,102 @@
         <h2 class="section-title">O <span>Roteiro</span></h2>
         <div class="script-window reveal">
             <div class="scene">
-                <span class="scene-title">1. PALCO ESCURO - O VILÃO</span>
+                <div class="scene-header">1 EXT PALCO ESCURO - A PONTE</div>
+                <p class="action">PONTE COM BALAÚSTRES. FUNDO DE PONTE EM NOITE ESCURA COM ÁRVORES SEM FOLHAS, LUA CHEIA E CÉU AZUL ESCURO. FOCO DA LUZ NO VILÃO.</p>
+                <p class="action">O Vilão entra produzindo um ar maléfico e manipulador, fino, roupas sociais de época, ar galanteador, fala enquanto ri maléficamente.</p>
                 <char>VILÃO:</char>
-                <speech>"Mas eu já entendi como as coisas funcionam... Elas amam o que um homem pode dar. Status. Promessas."</speech>
+                <speech>"Mas eu já entendi como as coisas funcionam mulheres como Júlia não amam de verdade. Elas amam o que um homem pode dar. E segurança. Status. Promessas. Quando isso acaba, o amor acaba junto, é sempre assim eu não sou um cara mau, mas se eu não fizesse isso ela faria todas fazem isso."</speech>
             </div>
+
             <div class="scene">
-                <span class="scene-title">2. A CHEGADA DE JÚLIA</span>
-                <char>VILÃO:</char><speech>"Júlia, olha pra frente... Hoje a gente deixa tudo pra trás."</speech>
-                <char>JÚLIA:</char><speech>"Eu trouxe todo o dinheiro. Agora a gente pode ficar juntos para sempre?"</speech>
+                <div class="scene-header">2 EXT PALCO CLARO - A CHEGADA</div>
+                <p class="action">LUZES EM JÚLIA E NO VILÃO. Entra Júlia de roupas brancas em alusão a uma noiva, com um saco de dinheiro e uma mala de roupas.</p>
+                <char>VILÃO:</char>
+                <speech>"Júlia, olha pra frente... Hoje a gente deixa tudo pra trás. Sua família tentou nos separar, mas eu sou o único que realmente te ama."</speech>
+                <char>JÚLIA:</char>
+                <speech>"(Entregando o saco) Eu sempre soube que daria certo. Eu trouxe todo o dinheiro que você pediu. Agora a gente pode ficar juntos para sempre?"</speech>
+                <char>VILÃO (Sorrindo):</char>
+                <speech>"Pra sempre. Mas agora… Chegou a hora da nossa cerimônia de casamento."</speech>
             </div>
+
             <div class="scene">
-                <span class="scene-title">3. O BRINDE FATAL</span>
-                <char>VILÃO & JÚLIA:</char>
-                <speech>"Com esta mão, aliviarei as tuas dores. Com esta vela, iluminarei seu caminho..."</speech>
-                <p>[Júlia bebe e cai. Vilão a arrasta com desprezo]</p>
+                <div class="scene-header">3 A CERIMÔNIA E A TRAIÇÃO</div>
+                <p class="action">UMA MESA RÚSTICA, MÚSICA AMBIENTE E LEVEMENTE MEDONHA. Eles vão até a mesa. O VILÃO serve a bebida.</p>
+                <char>VILÃO E JÚLIA:</char>
+                <speech>"Com esta mão, aliviarei as tuas dores. Com esta vela, iluminarei seu caminho na escuridão. Sua taça jamais se esvaziará… pois serei o teu vinho."</speech>
+                <char>VILÃO:</char>
+                <speech>"Beba, Júlia. Pelo nosso “pra sempre”."</speech>
+                <p class="action">Júlia bebe. A música falha/distorce. Ela enfraquece e cai lentamente. O VILÃO pega o dinheiro e o arrasta para fora com desprezo.</p>
             </div>
+
             <div class="scene">
-                <span class="scene-title">4. CARLOS E A NOIVA</span>
-                <char>CARLOS:</char><speech>"Esse véu… Não pode ser… Júlia! A verdade sempre volta. A justiça não pode ser enterrada."</speech>
-                <p>[Valsa curta entre Carlos e a Noiva Cadáver]</p>
+                <div class="scene-header">4 A VALSA E O REENCONTRO</div>
+                <p class="action">Luz azul fria. CARLOS entra murmurando algo e encontra o véu de Júlia.</p>
+                <char>CARLOS:</char>
+                <speech>"Esse véu… Não pode ser… Júlia! Eu disse a você que ele não era o cara certo, mas você não me deu ouvidos. E eu te amava tanto... e agora Júlia, que faço? Já tinha decorado até os votos para quando chegasse o nosso dia."</speech>
+                <p class="action">Carlos pega uma taça e um galho. Repete os votos com amargura. Encontra um "galho" (mão da noiva) e coloca o anel.</p>
+                <p class="action">A Noiva Cadáver e Carlos iniciam uma valsa curta e lenta.</p>
+                <char>CARLOS:</char>
+                <speech>"Júlia! Mesmo dessa forma seria impossível eu não te reconhecer. A verdade sempre volta. E a justiça não pode ser enterrada. Se para continuar com você eu precise morrer, que eu faça isso!"</speech>
+                <p class="action">Carlos põe veneno na taça e leva à boca.</p>
             </div>
+
             <div class="scene">
-                <span class="scene-title">5. O ACERTO DE CONTAS</span>
+                <div class="scene-header">5 O ACERTO DE CONTAS FINAL</div>
+                <p class="action">MÚSICA TENSA. O VILÃO volta ao palco, assustado.</p>
+                <char>VILÃO:</char><speech>"O que é isso? O que acham que estão fazendo?!"</speech>
+                <p class="action">A Noiva Cadáver avança sozinha contra o VILÃO.</p>
                 <char>NOIVA CADÁVER (Voz Fantasmagórica):</char>
-                <speech>"Você me matou, mas não conseguiu apagar seus crimes. A hora de pagar chegou. Por mim… e por todas as outras!"</speech>
-                <p>[O Vilão bebe o veneno em deboche e morre. Blackout]</p>
+                <speech>"Você matou uma mulher, me matou mas não conseguiu apagar seus crimes. Porque eu ainda existo e nossa história ainda não acabou. A hora de pagar chegou. Por mim… e por todas as outras…"</speech>
+                <char>VILÃO:</char><speech>"E você pode me fazer o que? Eu não temo nada, e se precisar te mato mais uma vez hahaha!"</speech>
+                <p class="action">O Vilão toma a taça de Carlos em deboche e bebe. Começa a passar mal. A Noiva Cadáver toca nele enquanto ele morre.</p>
+                <p class="action">Fundo de vídeo com fotos e reportagens de feminicídios. BLACKOUT. FIM.</p>
+            </div>
+
+            <div class="script-footer">
+                <h5>TRILHA SONORA SUGERIDA:</h5>
+                <a href="https://youtu.be/Xly2WfQw3AY" target="_blank" style="color:var(--accent-blue); font-size:0.8rem;">Link da Trilha Principal</a>
+                <h5 style="margin-top:15px;">TUTORIAIS DE CONFECÇÃO:</h5>
+                <a href="https://youtu.be/6W5LJKBVkBA" target="_blank" style="color:var(--accent-blue); font-size:0.8rem;">Vídeo Tutorial Noiva Cadáver</a>
             </div>
         </div>
     </section>
 
-    <section id="tema" class="section">
-        <div class="theme-grid reveal">
-            <div>
-                <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 20px;">Temática: <span>Feminicídio</span></h2>
-                <p>O projeto utiliza o arquétipo da Noiva Cadáver para ilustrar o ciclo de violência e o "pra sempre" interrompido pela brutalidade.</p>
-                <div class="resources-grid">
-                    <div class="res-box"><h4>Recurso 01</h4><p>Atuadores Lineares</p></div>
-                    <div class="res-box"><h4>Recurso 02</h4><p>Maquiagem Artística</p></div>
-                    <div class="res-box"><h4>Recurso 03</h4><p>Sensores IR</p></div>
-                    <div class="res-box"><h4>Recurso 04</h4><p>Trilha Binaural</p></div>
-                </div>
+    <section id="cronograma" class="section">
+        <h2 class="section-title">Cronograma <span>2026</span></h2>
+        <div class="timeline reveal">
+            <div class="time-card">
+                <h4>FASE 1: Estrutura (Até 10 de Abr)</h4>
+                <p><strong>26/02 – 10/03:</strong> Limpeza do laboratório, retirada de eletrônicos antigos e levantamento do tema social.<br>
+                <strong>11/03 – 30/03:</strong> Pesquisa estética, roteiro, trilha e início da produção dos códigos.<br>
+                <strong>31/03 – 09/04:</strong> Levantamento de custos para figurino e cenário.<br>
+                <strong>10/ABRIL:</strong> 1ª APRESENTAÇÃO (Temática e Roteiro).</p>
             </div>
-            <div style="background: var(--glass-bg); height: 300px; border-radius: 20px; border: 1px solid var(--glass-border);">
-                </div>
+            <div class="time-card">
+                <h4>FASE 2: Estética (11 Abr – 15 Mai)</h4>
+                <p><strong>11/04 – 30/04:</strong> Confecção do figurino do robô e adereços temáticos.<br>
+                <strong>01/05 – 10/05:</strong> Ensaios de sincronia entre movimentos e narrativa.<br>
+                <strong>11/05 – 14/05:</strong> Revisão de orçamento e ajustes finais no roteiro.<br>
+                <strong>15/MAIO:</strong> 2ª APRESENTAÇÃO (Demonstração parcial).</p>
+            </div>
+            <div class="time-card">
+                <h4>FASE 3: Performance (16 Mai – 17 Jul)</h4>
+                <p><strong>16/05 – 15/06:</strong> Ajustes de iluminação, som e impacto visual da temática.<br>
+                <strong>16/06 – 10/07:</strong> Ensaios exaustivos da performance completa.<br>
+                <strong>11/07 – 16/07:</strong> Polimento na maquiagem e caracterização do robô.<br>
+                <strong>17/JULHO:</strong> 3ª APRESENTAÇÃO (Performance total).</p>
+            </div>
+            <div class="time-card">
+                <h4>FASE 4: Entrega (18 Jul – 14 Ago)</h4>
+                <p><strong>18/07 – 05/08:</strong> Implementação de melhorias sugeridas pela comissão.<br>
+                <strong>06/08 – 13/08:</strong> Gravação da performance final e conferência de itens.<br>
+                <strong>14/AGOSTO:</strong> APRESENTAÇÃO FINAL DEFINITIVA.</p>
+            </div>
         </div>
     </section>
 
     <section id="modelos" class="section">
-        <h2 class="section-title">Sistemas e <span>Modelos 3D</span></h2>
+        <h2 class="section-title">Sistemas e <span>Modelos</span></h2>
         <div class="media-grid reveal">
             <div class="vid"><video src="v1.mp4" controls></video></div>
             <div class="vid"><video src="v2.mp4" controls></video></div>
@@ -211,15 +261,20 @@
                 <div class="tab active" onclick="tabCode(0)">Sincronia.py</div>
                 <div class="tab" onclick="tabCode(1)">Motores.ino</div>
             </div>
-            <pre class="active"># Lógica de Sincronia Roteiro/Robô
-def play_scene(id):
-    if id == 5:
-        leds.color("RED")
-        motor.move_to(90)</pre>
-            <pre>// Controle de Servos
+            <pre class="active"># Lógica de Controle da Performance
+def executar_cena(id):
+    if id == "VENENO":
+        led_facial.set_color("RED")
+        motor_braco.move_to(90)
+        audio_trigger("morte_vilao.mp3")
+    elif id == "VALSA":
+        robot.sync_dance(bpm=60)</pre>
+            <pre>// Controle de Servos Arduino
 void loop() {
-  if (serial.read() == 'DANCE') {
-    servos.write(120);
+  if (Serial.available() > 0) {
+    char cmd = Serial.read();
+    if (cmd == 'V') moveServo(Veu_Pin, 180);
+    if (cmd == 'T') moveServo(Taca_Pin, 45);
   }
 }</pre>
         </div>
