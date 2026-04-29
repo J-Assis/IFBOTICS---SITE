@@ -38,58 +38,59 @@
         .section-title { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 50px; text-align: center; }
         .section-title span { color: var(--accent-blue); font-style: italic; }
 
-        /* Hero Layout */
+        /* Hero */
         .hero { height: 100vh; display: flex; align-items: center; }
         .hero-container { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 40px; }
         .hero-content { flex: 1.2; }
         .hero-content h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.1; margin-bottom: 20px; }
         .hero-content h1 em { font-family: 'Playfair Display', serif; color: var(--accent-blue); }
-        .hero-image { flex: 0.8; display: flex; justify-content: center; align-items: center; }
-        .hero-image img { max-width: 110%; height: auto; filter: drop-shadow(0 0 30px rgba(74, 144, 226, 0.2)); }
+        .hero-image { flex: 0.8; display: flex; justify-content: center; }
+        .hero-image img { max-width: 120%; height: auto; filter: drop-shadow(0 0 30px rgba(74, 144, 226, 0.3)); }
 
         /* Team */
-        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
         .member-card { background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 25px; border-radius: 20px; text-align: center; backdrop-filter: var(--glass-blur); }
-        .member-img { width: 70px; height: 70px; background: #111; border-radius: 50%; margin: 0 auto 15px; border: 1px solid var(--accent-blue); }
-        .member-card h3 { font-size: 0.9rem; }
-        .member-card span { font-size: 0.65rem; color: var(--accent-blue); text-transform: uppercase; }
+        .member-img { width: 60px; height: 60px; background: #111; border-radius: 50%; margin: 0 auto 15px; border: 1px solid var(--accent-blue); }
+        .member-card h3 { font-size: 0.85rem; margin-bottom: 5px; }
+        .member-card span { font-size: 0.6rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Roteiro Inteiro */
-        .script-window { background: #080a0d; border: 1px solid var(--glass-border); padding: 40px; border-radius: 25px; height: 600px; overflow-y: auto; line-height: 1.6; }
-        .scene { margin-bottom: 40px; border-left: 2px solid var(--accent-blue); padding-left: 20px; }
-        .scene-head { font-size: 0.8rem; font-weight: 800; color: var(--accent-blue); margin-bottom: 10px; text-transform: uppercase; }
-        .char { font-weight: 800; color: #fff; margin-top: 10px; display: block; }
-        .speech { color: var(--text-dim); display: block; margin-bottom: 5px; }
-        .action { font-style: italic; color: #667788; font-size: 0.9rem; margin: 5px 0; }
-
-        /* Cronograma */
-        .timeline { position: relative; max-width: 1000px; margin: 0 auto; }
-        .timeline::before { content: ''; position: absolute; left: 50%; width: 1px; height: 100%; background: var(--glass-border); }
-        .time-card { width: 45%; margin-bottom: 30px; padding: 20px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 15px; position: relative; }
-        .time-card:nth-child(odd) { left: 0; text-align: right; }
-        .time-card:nth-child(even) { left: 55%; text-align: left; }
-        .time-card h4 { color: var(--accent-blue); margin-bottom: 8px; font-size: 1rem; }
-        .time-card p { font-size: 0.8rem; color: var(--text-dim); }
-
-        /* Temática */
+        /* Temática e Recursos */
         .theme-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
         .resources-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 30px; }
-        .res-box { background: var(--glass-bg); padding: 20px; border-radius: 15px; border: 1px solid var(--glass-border); text-align: center; }
+        .res-box { background: var(--glass-bg); padding: 20px; border-radius: 15px; border: 1px solid var(--glass-border); }
+        .res-box h4 { font-size: 0.8rem; color: var(--accent-blue); margin-bottom: 10px; line-height: 1.2; }
+        .res-box p { font-size: 0.75rem; color: var(--text-dim); line-height: 1.4; }
+
+        /* Roteiro Window */
+        .script-window { background: #080a0d; border: 1px solid var(--glass-border); padding: 40px; border-radius: 25px; height: 600px; overflow-y: auto; line-height: 1.8; }
+        .scene { margin-bottom: 50px; border-left: 2px solid var(--accent-blue); padding-left: 25px; }
+        .scene-head { font-size: 0.85rem; font-weight: 800; color: var(--accent-blue); text-transform: uppercase; margin-bottom: 20px; }
+        .action { font-style: italic; color: #7a8a99; margin: 15px 0; font-size: 0.95rem; }
+        .char { font-weight: 800; color: #fff; text-transform: uppercase; margin-top: 20px; display: block; }
+        .speech { color: var(--text-dim); display: block; margin-bottom: 10px; }
+
+        /* Cronograma Estilizado */
+        .timeline { position: relative; max-width: 1000px; margin: 0 auto; }
+        .timeline::before { content: ''; position: absolute; left: 50%; width: 1px; height: 100%; background: var(--glass-border); }
+        .time-card { width: 45%; margin-bottom: 40px; padding: 25px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; position: relative; }
+        .time-card:nth-child(odd) { left: 0; text-align: right; }
+        .time-card:nth-child(even) { left: 55%; text-align: left; }
+        .time-card h4 { color: var(--accent-blue); margin-bottom: 10px; font-size: 1.1rem; }
+        .time-card .date { font-weight: 800; color: #fff; font-size: 0.8rem; display: block; margin-bottom: 5px; }
+        .time-card p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+        .milestone { background: rgba(74, 144, 226, 0.1); padding: 10px; border-radius: 10px; border-left: 3px solid var(--accent-blue); margin-top: 10px; font-weight: 600; font-size: 0.75rem; color: #fff; }
 
         /* Códigos */
         .code-block { background: #000; border-radius: 15px; border: 1px solid var(--glass-border); overflow: hidden; margin-top: 40px; }
         .tabs { display: flex; background: #111; flex-wrap: wrap; }
         .tab { padding: 12px 15px; cursor: pointer; font-size: 0.7rem; color: var(--text-dim); border-right: 1px solid #222; flex-grow: 1; text-align: center; }
         .tab.active { background: #000; color: var(--accent-blue); }
-        pre { padding: 25px; color: #4a90e2; font-size: 0.85rem; display: none; overflow-x: auto; }
+        pre { padding: 25px; color: #4a90e2; font-size: 0.85rem; display: none; overflow-x: auto; font-family: monospace; }
         pre.active { display: block; }
 
-        /* Mídia */
-        .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .vid-box { background: #000; border-radius: 15px; aspect-ratio: 16/9; overflow: hidden; border: 1px solid var(--glass-border); }
-
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero-container { flex-direction: column; text-align: center; margin-top: 50px; }
+            .hero-container { flex-direction: column; text-align: center; }
             .timeline::before { left: 0; }
             .time-card { width: 100%; left: 0 !important; text-align: left !important; }
             .theme-grid { grid-template-columns: 1fr; }
@@ -145,90 +146,165 @@
             <div>
                 <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 20px;">Temática: <span>Feminicídio</span></h2>
                 <p>O projeto utiliza o arquétipo da Noiva Cadáver para ilustrar o ciclo de violência e o "pra sempre" interrompido pela brutalidade.</p>
+                
                 <div class="resources-grid">
-                    <div class="res-box"><h4>Recurso 01 - Interação robô com
-cenário ou humanos</h4><p>Reconhecimento de imagens:Eles
-executam diferentes ações em resposta a
-sinais com as mãos ou movimentos
-corporais.</p></div>
-                    <div class="res-box"><h4>Recurso 02 - Detecção ou desvio
-de obstáculos</h4><p>Evitando colisões: Os robôs evitam
-colisões uns com os outros enquanto se
-movem.</p></div>
-                    <div class="res-box"><h4>Recurso 03 - Localização e
-Mapeamento</h4><p>Orientação no espaço: Utilizando sensores como giroscópio e motores, o robô identifica sua posição e se movimenta de forma precisa no ambiente.</p></div>
-                    <div class="res-box"><h4>Recurso 04 - Reconhecimento
-visual / áudio</h4><p>Interpretação do ambiente: O robô reconhece imagens e sons ao seu redor, permitindo interação e tomada de decisões com base nesses dados.</p></div>
+                    <div class="res-box">
+                        <h4>Recurso 01 - Interação robô com cenário ou humanos</h4>
+                        <p>Reconhecimento de imagens: Eles executam diferentes ações em resposta a sinais com as mãos ou movimentos corporais.</p>
+                    </div>
+                    <div class="res-box">
+                        <h4>Recurso 02 - Detecção ou desvio de obstáculos</h4>
+                        <p>Evitando colisões: Os robôs evitam colisões uns com os outros enquanto se movem.</p>
+                    </div>
+                    <div class="res-box">
+                        <h4>Recurso 03 - Localização e Mapeamento</h4>
+                        <p>Orientação no espaço: Utilizando sensores como giroscópio e motores, o robô identifica sua posição e se movimenta de forma precisa no ambiente.</p>
+                    </div>
+                    <div class="res-box">
+                        <h4>Recurso 04 - Reconhecimento visual / áudio</h4>
+                        <p>Interpretação do ambiente: O robô reconhece imagens e sons ao seu redor, permitindo interação e tomada de decisões com base nesses dados.</p>
+                    </div>
                 </div>
             </div>
-            <div style="background: var(--glass-bg); height: 350px; border-radius: 20px; border: 1px solid var(--glass-border); overflow: hidden;">
-                <img src="tema-bg.jpg" alt="Feminicídio Critica" style="width:100%; height:100%; object-fit:cover; opacity: 0.4;">
+            <div style="background: var(--glass-bg); height: 450px; border-radius: 20px; border: 1px solid var(--glass-border); overflow: hidden;">
+                <img src="tema-bg.jpg" alt="Impacto Social" style="width:100%; height:100%; object-fit:cover; opacity: 0.4;">
             </div>
         </div>
     </section>
 
-    <section id="roteiro" class="section">
+   <section id="roteiro" class="section">
         <h2 class="section-title">O <span>Roteiro</span></h2>
         <div class="script-window reveal">
             <div class="scene">
-                <div class="scene-head">Cena 1: A Ponte e o Vilão</div>
-                <p class="action">PALCO ESCURO. PONTE COM BALAÚSTRES. FOCO NO VILÃO.</p>
+                <div class="scene-header">1 EXT PALCO ESCURO - PONTE</div>
+                <p class="action">FONTE COM BALAÚSTRES. FUNDO DE PONTE EM NOITE ESCURA COM ÁRVORES SEM FOLHAS, LUA CHEIA E CÉU AZUL ESCURO. FOCO DA LUZ NO VILÃO.</p>
+                <p class="action">O Vilão entra produzindo um ar maléfico e manipulador, fino, roupas sociais de época, ar galanteador, fala enquanto ri maléficamente.</p>
                 <char>VILÃO:</char>
-                <speech>"Mas eu já entendi como as coisas funcionam... mulheres como Júlia não amam de verdade. Elas amam o que um homem pode dar."</speech>
+                <speech>"Mas eu já entendi como as coisas funcionam mulheres como Júlia não amam de verdade. Elas amam o que um homem pode dar. E segurança. Status. Promessas. Quando isso acaba, o amor acaba junto, é sempre assim eu não sou um cara mau, mas se eu não fizesse isso ela faria todas fazem isso."</speech>
             </div>
+
             <div class="scene">
-                <div class="scene-head">Cena 2: O Encontro</div>
-                <p class="action">LUZES EM JÚLIA E NO VILÃO. Júlia entra de noiva com um saco de dinheiro.</p>
-                <char>VILÃO:</char><speech>"Hoje a gente deixa tudo pra trás. Eu sou o único que realmente te ama."</speech>
-                <char>JÚLIA:</char><speech>"Eu trouxe todo o dinheiro. Agora a gente pode ficar juntos para sempre?"</speech>
+                <div class="scene-header">2 EXT PALCO CLARO - FLORESTA</div>
+                <p class="action">LUZES EM JÚLIA E NO VILÃO. Entra Júlia de roupas brancas em alusão a uma noiva, com um saco de dinheiro e uma mala de roupas.</p>
+                <char>VILÃO:</char>
+                <speech>"Júlia, olha pra frente... Hoje a gente deixa tudo pra trás. Sua família tentou nos separar, mas eu sou o único que realmente te ama."</speech>
+                <char>JÚLIA:</char>
+                <speech>"(Entregando o saco) Eu sempre soube que daria certo. Eu trouxe todo o dinheiro que você pediu. Agora a gente pode ficar juntos para sempre?"</speech>
+                <char>VILÃO (Sorrindo):</char>
+                <speech>"Pra sempre. Mas agora… Chegou a hora da nossa cerimônia de casamento."</speech>
             </div>
+
             <div class="scene">
-                <div class="scene-head">Cena 3: A Traição</div>
-                <p class="action">O VILÃO serve a bebida. Música ambiente medonha.</p>
-                <char>VILÃO E JÚLIA:</char><speech>"Com esta mão, aliviarei as tuas dores. Sua taça jamais se esvaziará… pois serei o teu vinho."</speech>
-                <p class="action">Júlia bebe e cai lentamente. O Vilão a arrasta para fora com desprezo.</p>
+                <div class="scene-header">3 A CERIMÔNIA E O VENENO</div>
+                <p class="action">UMA MESA RÚSTICA, MÚSICA AMBIENTE E LEVEMENTE MEDONHA. Eles vão até a mesa. O VILÃO serve a bebida.</p>
+                <char>VILÃO E JÚLIA:</char>
+                <speech>"Com esta mão, aliviarei as tuas dores. Com esta vela, iluminarei seu caminho na escuridão. Sua taça jamais se esvaziará… pois serei o teu vinho."</speech>
+                <char>VILÃO:</char>
+                <speech>"Beba, Júlia. Pelo nosso “pra sempre”."</speech>
+                <p class="action">Júlia bebe. A música falha/distorce. Ela enfraquece e cai lentamente. O VILÃO pega o dinheiro e o arrasta para fora com desprezo.</p>
             </div>
+
             <div class="scene">
-                <div class="scene-head">Cena 4: Carlos e a Noiva</div>
-                <char>CARLOS:</char><speech>"Esse véu… Não pode ser… Júlia! A verdade sempre volta. A justiça não pode ser enterrada."</speech>
-                <p class="action">Carlos e a Noiva Cadáver iniciam uma valsa curta e lenta.</p>
+                <div class="scene-header">4 CARLOS E A VALSA</div>
+                <p class="action">LUZ AZUL FRIA. CARLOS entra murmurando e encontra o véu de Júlia.</p>
+                <char>CARLOS:</char>
+                <speech>"Esse véu… Não pode ser… Júlia! Eu disse a você que ele não era o cara certo, mas você não me deu ouvidos. E eu te amava tanto... e agora Júlia, que faço? Já tinha decorado até os votos para quando chegasse o nosso dia."</speech>
+                <p class="action">CARLOS encontra junto ao véu uma taça e um galho e a pega.</p>
+                <char>CARLOS:</char>
+                <speech>"Com esta mão, aliviarei as tuas dores. Com esta vela, iluminarei seu caminho na escuridão. Sua taça jamais se esvaziará… Pois serei o teu vinho. E com essa aliança te farei minha."</speech>
+                <p class="action">A Noiva Cadáver e Carlos se aproximam iniciando uma valsa curta e lenta.</p>
+                <char>CARLOS:</char>
+                <speech>"Júlia! Mesmo dessa forma seria impossível eu não te reconhecer. A verdade sempre volta. E a justiça não pode ser enterrada. Se para continuar com você eu precise morrer, que eu faça isso!"</speech>
+                <p class="action">Carlos põe veneno na taça e leva à boca.</p>
             </div>
+
             <div class="scene">
-                <div class="scene-head">Cena 5: O Fim do Vilão</div>
-                <char>NOIVA CADÁVER:</char><speech>"Você me matou mas não conseguiu apagar seus crimes. A hora de pagar chegou. Por todas as outras!"</speech>
-                <p class="action">O Vilão morre. Reportagens de feminicídios no fundo. BLACKOUT.</p>
+                <div class="scene-header">5 O ACERTO DE CONTAS FINAL</div>
+                <p class="action">MÚSICA TENSA. O VILÃO volta ao palco, assustado.</p>
+                <char>VILÃO:</char>
+                <speech>"O que é isso? O que acham que estão fazendo?!"</speech>
+                <p class="action">A Noiva Cadáver para a dança e avança sozinha contra o VILÃO.</p>
+                <char>NOIVA CADÁVER (Voz Fantasmagórica):</char>
+                <speech>"Você matou uma mulher, me matou mas não conseguiu apagar seus crimes. Porque eu ainda existo e nossa história ainda não acabou. A hora de pagar chegou. Por mim… e por todas as outras!"</speech>
+                <char>VILÃO:</char>
+                <speech>"E você pode me fazer o que? acha que tenho medo de você? Eu não temo nada, e se precisar te mato mais uma vez hahaha!"</speech>
+                <p class="action">O Vilão toma a taça de Carlos e bebe em deboche. Começa a passar mal e morrer.</p>
+                <p class="action">BLACKOUT enquanto no vídeo de fundo aparecem fotos e reportagens de feminicídios. FIM.</p>
             </div>
         </div>
     </section>
 
-    <section id="cronograma" class="section">
+  <section id="cronograma" class="section">
         <h2 class="section-title">Cronograma de <span>Execução</span></h2>
         <div class="timeline reveal">
+            
             <div class="time-card">
-                <h4>Fase 1: Estrutura</h4>
-                <p>26/02-30/03: Pesquisa estética, códigos e roteiro.<br><strong>10/Abr: 1ª Apresentação.</strong></p>
+                <h4>FASE 1: Conceituação e Estrutura</h4>
+                <span class="date">26/02 – 10/04</span>
+                <p>
+                    <strong>Resumo:</strong> Período focado na organização da equipe IFBOTICS, reciclagem de componentes de robôs antigos e definição do roteiro "Noiva Cadáver" como crítica ao Feminicídio.
+                </p>
+                <p style="font-size: 0.75rem; margin-top: 10px;">
+                    • 26/02-10/03: Limpeza e inventário.<br>
+                    • 11/03-30/03: Roteiro e trilha sonora.<br>
+                    • 31/03-09/04: Orçamento de figurino e cenário.
+                </p>
+                <div class="milestone">📌 10/ABRIL: 1ª Apresentação (Conceito e Funções)</div>
             </div>
+
             <div class="time-card">
-                <h4>Fase 2: Estética</h4>
-                <p>11/04-10/05: Confecção do figurino e ensaios de sincronia.<br><strong>15/Mai: 2ª Apresentação.</strong></p>
+                <h4>FASE 2: Desenvolvimento Estético, Vídeo e Hardware</h4>
+                <span class="date">11/04 – 15/05</span>
+                <p>
+                    <strong>Resumo:</strong> Fase de materialização visual e construção física. O foco é unir o design do robô, a estrutura de engenharia e a <strong>criação do conteúdo audiovisual de fundo</strong> para a performance.
+                </p>
+                <p style="font-size: 0.75rem; margin-top: 10px;">
+                    • 11/04-30/04: Confecção de figurino e adereços.<br>
+                    • 01/05-15/05: <strong>Criação e edição do vídeo de fundo</strong> (projeção de impacto social e cenários do roteiro).<br>
+                    • 04/05-08/05: Cálculo de base, centro de massa e corte do acrílico na CNC Laser.<br>
+                    • 2ª Semana de Maio: Montagem estrutural da base e fixação do hardware.
+                </p>
+                <div class="milestone">📌 15/MAIO: 2ª Apresentação (Demo de Estética, Vídeo e Estrutura)</div>
             </div>
+
             <div class="time-card">
-                <h4>Fase 3: Performance</h4>
-                <p>16/05-10/07: Ajustes visuais e ensaios exaustivos.<br><strong>17/Jul: 3ª Apresentação.</strong></p>
+                <h4>FASE 3: Montagem e Integração Eletrônica</h4>
+                <span class="date">16/05 – 17/07</span>
+                <p>
+                    <strong>Resumo:</strong> Período crítico de engenharia. Instalação de toda a inteligência do robô, fiação, sensores e calibração de movimentos para a performance.
+                </p>
+                <p style="font-size: 0.75rem; margin-top: 10px;">
+                    <strong>• 16/05 – 30/05 (Eletrônica Base):</strong> Instalação da placa de controle (Arduino/ESP32), drivers de motor, organização de cabos e sistema de alimentação (baterias).<br>
+                    <strong>• 01/06 – 15/06 (Sensores e Visão):</strong> Montagem dos sensores ultrassônicos, infravermelho, giroscópio e câmera para reconhecimento visual.<br>
+                    <strong>• 16/06 – 30/06 (Sincronia):</strong> Integração dos atuadores para movimentos braços/cabeça sincronizados com o vídeo de fundo e áudios.<br>
+                    <strong>• 01/07 – 10/07 (Ensaios):</strong> Testes exaustivos de bateria, autonomia e resposta do sistema sob estresse.<br>
+                    <strong>• 11/07 – 16/07:</strong> Polimento de maquiagem e ajustes finais de cenário.
+                </p>
+                <div class="milestone">📌 17/JULHO: 3ª Apresentação (Performance Robótica Completa)</div>
             </div>
+
             <div class="time-card">
-                <h4>Fase 4: Entrega Final</h4>
-                <p>18/07-13/08: Refinamentos finais e gravação.<br><strong>14/Ago: Apresentação Final.</strong></p>
+                <h4>FASE 4: Refinamento e Entrega</h4>
+                <span class="date">18/07 – 14/08</span>
+                <p>
+                    <strong>Resumo:</strong> Ajustes finais baseados no feedback da banca e finalização da documentação e vídeos para a apresentação definitiva.
+                </p>
+                <p style="font-size: 0.75rem; margin-top: 10px;">
+                    • 18/07-05/08: Implementação de melhorias sugeridas pela comissão.<br>
+                    • 06/08-13/08: Gravação final da performance e conferência de todos os itens de avaliação.
+                </p>
+                <div class="milestone">📌 14/AGOSTO: APRESENTAÇÃO FINAL DEFINITIVA</div>
             </div>
+
         </div>
     </section>
 
     <section id="modelos" class="section">
-        <h2 class="section-title">Sistemas e <span>Modelos</span></h2>
-        <div class="media-grid reveal">
-            <div class="vid-box"><video src="v1.mp4" controls></video></div>
-            <div class="vid-box"><video src="v2.mp4" controls></video></div>
-            <div class="vid-box"><video src="v3.mp4" controls></video></div>
+        <h2 class="section-title">Sistemas e <span>Códigos</span></h2>
+        <div class="media-grid reveal" style="margin-bottom: 40px;">
+            <div class="vid-box"><video src="v1.mp4" controls style="width:100%; height:100%"></video></div>
+            <div class="vid-box"><video src="v2.mp4" controls style="width:100%; height:100%"></video></div>
+            <div class="vid-box"><video src="v3.mp4" controls style="width:100%; height:100%"></video></div>
         </div>
         <div class="code-block reveal">
             <div class="tabs">
@@ -240,13 +316,20 @@ visual / áudio</h4><p>Interpretação do ambiente: O robô reconhece imagens e 
                 <div class="tab" onclick="tabCode(5)">mimimimi6.ino</div>
                 <div class="tab" onclick="tabCode(6)">mimimi7.ino</div>
             </div>
-            <pre class="active"># camera</pre>
-            <pre># movimentos</pre>
-            <pre># seguidor de linha</pre>
-            <pre># obstáculo</pre>
-            <pre># detectar e desviar</pre>
-            <pre># giroscopio</pre>
-            <pre># extra</pre>
+            <pre class="active">// Sistema de visão computacional
+# camera</pre>
+            <pre>// Controle de atuadores e servos
+# movimentos</pre>
+            <pre>// Navegação autônoma em pista
+# seguidor de linha</pre>
+            <pre>// Lógica de segurança infravermelho
+# obstáculo</pre>
+            <pre>// Algoritmo de desvio inteligente
+# detectar e desviar</pre>
+            <pre>// Estabilização via hardware
+# giroscopio</pre>
+            <pre>// Funções auxiliares extras
+# extra</pre>
         </div>
     </section>
 
