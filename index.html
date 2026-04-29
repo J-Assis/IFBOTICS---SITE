@@ -376,7 +376,7 @@
                     • 11/03-30/03: Roteiro e trilha sonora.<br>
                     • 31/03-09/04: Orçamento de figurino e cenário.
                 </p>
-                <div class="milestone">📌 10/ABRIL: 1ª Apresentação (Conceito e Funções)</div>
+                <div class="milestone">  10/ABRIL: 1ª Apresentação (Conceito e Funções)</div>
             </div>
 
             <div class="time-card">
@@ -391,7 +391,7 @@
                     • 04/05-08/05: Cálculo de base, centro de massa e corte do acrílico na CNC Laser.<br>
                     • 2ª Semana de Maio: Montagem estrutural da base e fixação do hardware.
                 </p>
-                <div class="milestone">📌 15/MAIO: 2ª Apresentação (Demo de Estética, Vídeo e Estrutura)</div>
+                <div class="milestone">• 15/MAIO: 2ª Apresentação (Demo de Estética, Vídeo e Estrutura)</div>
             </div>
 
             <div class="time-card">
@@ -407,7 +407,7 @@
                     <strong>• 01/07 – 10/07 (Ensaios):</strong> Testes exaustivos de bateria, autonomia e resposta do sistema sob estresse.<br>
                     <strong>• 11/07 – 16/07:</strong> Polimento de maquiagem e ajustes finais de cenário.
                 </p>
-                <div class="milestone">📌 17/JULHO: 3ª Apresentação (Performance Robótica Completa)</div>
+                <div class="milestone">• 17/JULHO: 3ª Apresentação (Performance Robótica Completa)</div>
             </div>
 
             <div class="time-card">
@@ -420,7 +420,7 @@
                     • 18/07-05/08: Implementação de melhorias sugeridas pela comissão.<br>
                     • 06/08-13/08: Gravação final da performance e conferência de todos os itens de avaliação.
                 </p>
-                <div class="milestone">📌 14/AGOSTO: APRESENTAÇÃO FINAL DEFINITIVA</div>
+                <div class="milestone">• 14/AGOSTO: APRESENTAÇÃO FINAL DEFINITIVA</div>
             </div>
 
         </div>
@@ -443,18 +443,706 @@
                 <div class="tab" onclick="tabCode(5)">mimimimi6.ino</div>
                 <div class="tab" onclick="tabCode(6)">mimimi7.ino</div>
             </div>
-            <pre class="active">// Sistema de visão computacional
-# camera</pre>
-            <pre>// Controle de atuadores e servos
-# movimentos</pre>
-            <pre>// Navegação autônoma em pista
-# seguidor de linha</pre>
+            <pre class="active">
+#include "esp_camera.h" // Biblioteca da câmera ESP32-CAM
+#include &lt;WiFi.h&gt;        // Biblioteca Wi-Fi
+#include &lt;WebServer.h&gt;   // Servidor web
+
+#define CAMERA_MODEL_AI_THINKER // Define o modelo da câmera
+#include "camera_pins.h"        // Pinos específicos da câmera
+
+// ================== CONFIG WIFI ==================
+const char* ap_ssid = "robot";        // Nome da rede Wi-Fi
+const char* ap_password = "12345678"; // Senha da rede
+
+WebServer server(80); // Cria servidor na porta 80
+
+// ================== PÁGINA HTML ==================
+void PgVideo() {
+  String html = "&lt;html&gt;&lt;head&gt;";
+  
+  html += "&lt;meta name='viewport' content='width=device-width, initial-scale=1'&gt;";
+  
+  html += "&lt;style&gt;";
+  html += "body{background:#111;color:#fff;text-align:center;font-family:sans-serif;margin:0;padding:0;}"; // Estilo da página
+  html += "img{width:45%;border-radius:10px;box-shadow:0 0 10px #000;margin-top:15px;}"; // Estilo do vídeo
+  html += "&lt;/style&gt;&lt;/head&gt;&lt;body&gt;";
+  
+  html += "&lt;h2&gt;Robo Cam - VGA&lt;/h2&gt;"; // Título
+  html += "&lt;img src='/stream'&gt;";       // Imagem puxando o stream
+  
+  html += "&lt;/body&gt;&lt;/html&gt;";
+  
+  server.send(200, "text/html", html); // Envia página pro navegador
+}
+
+// ================== STREAM DE VÍDEO ==================
+void streamTask(void *pvParameters) {
+
+  WiFiClient client = *(WiFiClient*)pvParameters; // Cliente conectado
+
+  // Cabeçalho HTTP para stream contínuo
+  String header = "HTTP/1.1 200 OK\r\n";
+  header += "Content-Type: multipart/x-mixed-replace; boundary=frame\r\n\r\n";
+  
+  client.print(header); // Envia cabeçalho
+
+  while (client.connected()) { // Enquanto cliente estiver conectado
+    
+    camera_fb_t * fb = esp_camera_fb_get(); // Captura frame da câmera
+    
+    if (!fb) continue; // Se falhar, tenta de novo
+
+    client.print("--frame\r\n"); // Separador de frames
+    client.print("Content-Type: image/jpeg\r\n\r\n"); // Tipo da imagem
+    
+    client.write(fb->buf, fb->len); // Envia imagem JPEG
+    client.print("\r\n");
+
+    esp_camera_fb_return(fb); // Libera memória do frame
+
+    delay(40);  // Controle de FPS (~25 FPS)
+  }
+
+  client.stop();       // Encerra conexão
+  vTaskDelete(NULL);  // Finaliza a task
+}
+
+// ================== INICIAR STREAM ==================
+void LerVideo() {
+
+  WiFiClient client = server.client(); // Pega cliente conectado
+
+  // Cria ponteiro do cliente (necessário pra task)
+  WiFiClient *pclient = new WiFiClient(client);
+
+  // Cria task paralela para stream (roda no core 1)
+  xTaskCreatePinnedToCore(streamTask, "streamTask", 8192, pclient, 1, NULL, 1);
+}
+
+// ================== CONFIGURAR CÂMERA ==================
+bool iniciarCamera() {
+
+  camera_config_t config; // Estrutura de configuração
+
+  config.ledc_channel = LEDC_CHANNEL_0;
+  config.ledc_timer = LEDC_TIMER_0;
+
+  // Pinos de dados da câmera
+  config.pin_d0 = Y2_GPIO_NUM;
+  config.pin_d1 = Y3_GPIO_NUM;
+  config.pin_d2 = Y4_GPIO_NUM;
+  config.pin_d3 = Y5_GPIO_NUM;
+  config.pin_d4 = Y6_GPIO_NUM;
+  config.pin_d5 = Y7_GPIO_NUM;
+  config.pin_d6 = Y8_GPIO_NUM;
+  config.pin_d7 = Y9_GPIO_NUM;
+
+  // Pinos de sincronização
+  config.pin_xclk = XCLK_GPIO_NUM;
+  config.pin_pclk = PCLK_GPIO_NUM;
+  config.pin_vsync = VSYNC_GPIO_NUM;
+  config.pin_href = HREF_GPIO_NUM;
+
+  // Comunicação interna
+  config.pin_sscb_sda = SIOD_GPIO_NUM;
+  config.pin_sscb_scl = SIOC_GPIO_NUM;
+
+  // Controle de energia/reset
+  config.pin_pwdn = PWDN_GPIO_NUM;
+  config.pin_reset = RESET_GPIO_NUM;
+
+  config.xclk_freq_hz = 20000000; // Frequência do clock
+  config.pixel_format = PIXFORMAT_JPEG; // Formato da imagem
+
+  // ================== QUALIDADE ==================
+  config.frame_size = FRAMESIZE_VGA; // 640x480
+  config.jpeg_quality = 12;          // Qualidade (menor = melhor)
+  config.fb_count = 1;               // Buffer
+
+  // Inicializa câmera
+  if (esp_camera_init(&config) != ESP_OK) return false;
+
+  // Espelhamento horizontal
+  sensor_t * s = esp_camera_sensor_get();
+  s->set_hmirror(s, 1);
+
+  return true; // Sucesso
+}
+
+// ================== SETUP ==================
+void setup() {
+
+  Serial.begin(115200); // Inicia comunicação serial
+
+  // Inicializa câmera
+  if (!iniciarCamera()) {
+    Serial.println("ERRO ao iniciar câmera.");
+    return;
+  }
+
+  WiFi.mode(WIFI_AP); // Modo Access Point
+  WiFi.softAP(ap_ssid, ap_password); // Cria rede Wi-Fi
+
+  pinMode(FLASH_GPIO_NUM, OUTPUT); // LED flash
+  digitalWrite(FLASH_GPIO_NUM, LOW); // Desliga flash
+
+  // Rotas do servidor
+  server.on("/", PgVideo);     // Página principal
+  server.on("/stream", LerVideo); // Stream de vídeo
+
+  server.begin(); // Inicia servidor
+}
+
+// ================== LOOP ==================
+void loop() {
+
+  server.handleClient(); // Atende requisições
+
+  delay(0); // Evita travamento do sistema
+}
+</pre>
+
+<pre>
+// ================== PWM ==================
+#define PINO_PWM1       5   // Controle de velocidade motor 1
+#define PINO_PWM2       6   // Controle de velocidade motor 2      
+
+// ================== SHIFT REGISTER + DRIVER ==================
+#define PINO_SHCP       2   // Clock de deslocamento (Shift Clock)
+#define PINO_EN         7   // Enable (ativa/desativa os motores)
+#define PINO_DATA       8   // Entrada de dados seriais
+#define PINO_STCP       4   // Latch (trava os dados enviados)
+
+// ================== DIREÇÕES ==================
+const int FRENTE         = 92;   // Anda para frente
+const int RE             = 163;  // Anda para trás
+const int ESQUERDA       = 149;  // Gira para esquerda
+const int DIREITA        = 106;  // Gira para direita
+
+// Movimentos diagonais / ajustes finos
+const int CIMA_ESQ       = 20;   
+const int BAIXO_ESQ      = 129;  
+const int CIMA_DIR       = 72;   
+const int BAIXO_DIR      = 34;   
+
+// Giro no próprio eixo
+const int ANTI_HORARIO   = 172;  // Gira para esquerda (eixo)
+const int HORARIO        = 83;   // Gira para direita (eixo)
+
+const int PARAR          = 0;    // Para motores
+const int VELOCIDADE     = 250;  // Velocidade máxima (quase 255)
+
+// ================== SETUP ==================
+void setup() {
+
+  // Configura pinos do registrador
+  pinMode(PINO_SHCP, OUTPUT);
+  pinMode(PINO_EN, OUTPUT);
+  pinMode(PINO_DATA, OUTPUT);
+  pinMode(PINO_STCP, OUTPUT);
+
+  // Configura PWM
+  pinMode(PINO_PWM1, OUTPUT);
+  pinMode(PINO_PWM2, OUTPUT);
+}
+
+// ================== CONTROLE DOS MOTORES ==================
+void LigarMotores(int direcao, int velocidade) {
+
+  digitalWrite(PINO_EN, LOW); // Ativa saída do registrador
+
+  analogWrite(PINO_PWM1, velocidade); // Velocidade motor 1
+  analogWrite(PINO_PWM2, velocidade); // Velocidade motor 2
+
+  digitalWrite(PINO_STCP, LOW); // Prepara envio de dados
+
+  shiftOut(PINO_DATA, PINO_SHCP, MSBFIRST, direcao); // Envia comando
+
+  digitalWrite(PINO_STCP, HIGH); // Executa movimento
+}
+
+// ================== LOOP ==================
+void loop() {
+
+  // Anda para frente
+  LigarMotores(FRENTE, VELOCIDADE);     
+  delay(1000);
+
+  // Anda para trás
+  LigarMotores(RE, VELOCIDADE);
+  delay(1000);
+
+  // Avança um pouco
+  LigarMotores(FRENTE, VELOCIDADE);     
+  delay(500);
+
+  // Gira esquerda
+  LigarMotores(ESQUERDA, VELOCIDADE);
+  delay(1000);
+
+  // Gira direita
+  LigarMotores(DIREITA, VELOCIDADE);
+  delay(1000);
+
+  // Movimento diagonal superior esquerda
+  LigarMotores(CIMA_ESQ, VELOCIDADE);
+  delay(1000);
+
+  // Movimento diagonal inferior direita
+  LigarMotores(BAIXO_DIR, VELOCIDADE);
+  delay(1000);
+
+  // Movimento diagonal inferior esquerda
+  LigarMotores(BAIXO_ESQ, VELOCIDADE);
+  delay(1000);
+
+  // Movimento diagonal superior direita
+  LigarMotores(CIMA_DIR, VELOCIDADE);
+  delay(1000);
+
+  // Giro no próprio eixo (sentido horário)
+  LigarMotores(HORARIO, VELOCIDADE);
+  delay(1500);
+
+  // Giro no próprio eixo (sentido anti-horário)
+  LigarMotores(ANTI_HORARIO, VELOCIDADE);
+  delay(1500);
+
+  // Para o robô
+  LigarMotores(PARAR, VELOCIDADE);
+  delay(5000);
+}
+</pre>
+
+            <pre>
+#define PINO_PWM1        5   // PWM motor esquerdo (controle de velocidade)
+#define PINO_PWM2        6   // PWM motor direito
+
+#define PINO_SHCP        2   // Clock do registrador 74HC595
+#define PINO_EN          7   // Enable do registrador
+#define PINO_DATA        8   // Entrada de dados
+#define PINO_STCP        4   // Latch (trava os dados enviados)
+
+// ================== SENSORES DE LINHA ==================
+#define SENSOR_ESQ       A0  // Sensor esquerdo
+#define SENSOR_CENTRO    A1  // Sensor central
+#define SENSOR_DIR       A2  // Sensor direito
+
+// ================== DIREÇÕES ==================
+const int FRENTE         = 92;   // Anda para frente
+const int RE             = 163;  // Ré
+const int ESQUERDA       = 149;  // Gira esquerda
+const int DIREITA        = 106;  // Gira direita
+
+// Movimentos mais finos (ajustes)
+const int CIMA_ESQ       = 72;   
+const int BAIXO_ESQ      = 34;   
+const int CIMA_DIR       = 20;   
+const int BAIXO_DIR      = 129;  
+
+const int PARAR          = 0;    // Para motores
+
+// Rotação no próprio eixo
+const int ANTI_HORARIO   = 172;  // Giro esquerda
+const int HORARIO        = 83;   // Giro direita
+
+// Velocidades
+const int VP             = 170;  // Velocidade padrão
+const int VPA            = 200;  // Velocidade mais alta
+
+// ================== VARIÁVEIS DOS SENSORES ==================
+int Esq;     // Valor do sensor esquerdo
+int Centro;  // Valor do sensor central
+int Dir;     // Valor do sensor direito
+
+// ================== LIMITES ==================
+int LIMITE_PRETO = 450;   // Valor mínimo para considerar "preto"
+int LIMITE_BRANCO = 150;  // Valor máximo para considerar "branco"
+
+// ================== CONTROLE DOS MOTORES ==================
+void LigarMotores(int direcao, int velocidade) {
+
+  digitalWrite(PINO_EN, LOW); // Ativa o registrador
+
+  analogWrite(PINO_PWM1, velocidade); // Define velocidade motor esquerdo
+  analogWrite(PINO_PWM2, velocidade); // Define velocidade motor direito
+
+  digitalWrite(PINO_STCP, LOW); // Prepara envio
+
+  shiftOut(PINO_DATA, PINO_SHCP, MSBFIRST, direcao); // Envia comando
+
+  digitalWrite(PINO_STCP, HIGH); // Executa comando
+}
+
+// ================== SETUP ==================
+void setup() {
+
+  // Configuração dos pinos do registrador
+  pinMode(PINO_SHCP, OUTPUT);
+  pinMode(PINO_EN, OUTPUT);
+  pinMode(PINO_DATA, OUTPUT);
+  pinMode(PINO_STCP, OUTPUT);
+
+  // PWM
+  pinMode(PINO_PWM1, OUTPUT);
+  pinMode(PINO_PWM2, OUTPUT);
+
+  // Sensores
+  pinMode(SENSOR_ESQ, INPUT);
+  pinMode(SENSOR_CENTRO, INPUT);
+  pinMode(SENSOR_DIR, INPUT);
+
+  Serial.begin(115200); // Monitor serial (debug)
+}
+
+// ================== LOOP ==================
+void loop() {
+
+  // Lê os sensores
+  Esq = analogRead(SENSOR_ESQ);
+  Centro = analogRead(SENSOR_CENTRO);
+  Dir = analogRead(SENSOR_DIR);
+
+  /*
+  // Debug (opcional)
+  Serial.print(Esq); 
+  Serial.print(",");
+  Serial.print(Centro);
+  Serial.print(",");
+  Serial.println(Dir);
+  */
+
+  // ================== LÓGICA ==================
+
+  // Caso 1: tudo branco → segue reto
+  if (Esq &lt;= LIMITE_BRANCO && Centro &lt;= LIMITE_BRANCO && Dir &lt;= LIMITE_BRANCO) {
+    LigarMotores(FRENTE, VP);
+  }
+
+  // Caso 2: linha no centro → segue reto
+  if (Esq &lt;= LIMITE_BRANCO && Centro &gt;= LIMITE_PRETO && Dir &lt;= LIMITE_BRANCO) {
+    LigarMotores(FRENTE, VP);
+  }
+
+  // Caso 3: linha puxando esquerda → gira esquerda leve
+  else if (Esq &gt;= LIMITE_PRETO && Centro &gt;= LIMITE_PRETO && Dir &lt;= LIMITE_BRANCO) {
+    LigarMotores(ANTI_HORARIO, VP);
+  }
+
+  // Caso 4: só esquerda detecta → gira mais forte
+  else if (Esq &gt;= LIMITE_PRETO && Centro &lt;= LIMITE_BRANCO && Dir &lt;= LIMITE_BRANCO) {
+    LigarMotores(ANTI_HORARIO, VPA);
+  }
+
+  // Caso 5: só direita detecta → gira forte direita
+  else if (Esq &lt;= LIMITE_BRANCO && Centro &lt;= LIMITE_BRANCO && Dir &gt;= LIMITE_PRETO) {
+    LigarMotores(HORARIO, VPA);
+  }
+
+  // Caso 6: direita + centro → ajuste leve direita
+  else if (Esq &lt;= LIMITE_BRANCO && Centro &gt;= LIMITE_PRETO && Dir &gt;= LIMITE_PRETO) {
+    LigarMotores(HORARIO, VP);
+  }
+
+  // Caso 7: tudo preto → provavelmente chegou no fim → para
+  else if (Esq &gt;= LIMITE_PRETO && Centro &gt;= LIMITE_PRETO && Dir &gt;= LIMITE_PRETO) {
+    LigarMotores(PARAR, 0);
+  }
+}
+</pre>
+
             <pre>// Lógica de segurança infravermelho
 # obstáculo</pre>
-            <pre>// Algoritmo de desvio inteligente
-# detectar e desviar</pre>
-            <pre>// Estabilização via hardware
-# giroscopio</pre>
+<pre>
+// ================== SENSOR ULTRASSÔNICO ==================
+#define PINO_TRIG 12  // Pino que envia o pulso
+#define PINO_ECHO 13  // Pino que recebe o eco
+
+// ================== MOTORES + 74HC595 ==================
+#define PINO_PWM1        5   // PWM motor 1
+#define PINO_PWM2        6   // PWM motor 2
+#define PINO_SHCP        2   // Clock do registrador
+#define PINO_EN          7   // Enable
+#define PINO_DATA        8   // Dados
+#define PINO_STCP        4   // Latch
+
+// ================== SENSORES DE LINHA ==================
+#define SENSOR_ESQ       A0  // Sensor esquerdo
+#define SENSOR_CENTRO    A1  // Sensor central
+#define SENSOR_DIR       A2  // Sensor direito
+
+// ================== DIREÇÕES ==================
+const int FRENTE         = 92;   // Frente
+const int RE             = 163;  // Ré
+const int ESQUERDA       = 149;  // Gira esquerda
+const int DIREITA        = 106;  // Gira direita
+const int PARAR          = 0;    // Para
+const int ANTI_HORARIO   = 172;  // Giro eixo esquerda
+const int HORARIO        = 83;   // Giro eixo direita
+
+// ================== VARIÁVEIS ==================
+int Esq, Centro, Dir;           // Leituras dos sensores
+int LIMITE_PRETO = 450;         // Limiar para detectar linha preta
+
+const int VELOCIDADE = 220;     // Velocidade padrão
+const float DISTANCIA_OBSTACULO = 12.0; // Distância mínima (cm)
+
+// ================== MEDIR DISTÂNCIA ==================
+float medirDistancia() {
+
+  digitalWrite(PINO_TRIG, LOW);       // Garante desligado
+  delayMicroseconds(2);
+
+  digitalWrite(PINO_TRIG, HIGH);      // Dispara pulso
+  delayMicroseconds(10);
+  digitalWrite(PINO_TRIG, LOW);
+
+  float dist = pulseIn(PINO_ECHO, HIGH, 25000) / 58.0; // Converte para cm
+
+  if (dist &lt;= 0 || dist &gt; 200) return 999; // Erro → considera longe
+  return dist;
+}
+
+// ================== CONTROLE DOS MOTORES ==================
+void LigarMotores(int direcao, int velocidade) {
+
+  digitalWrite(PINO_EN, LOW); // Ativa registrador
+
+  analogWrite(PINO_PWM1, velocidade); // Velocidade motor 1
+  analogWrite(PINO_PWM2, velocidade); // Velocidade motor 2
+
+  digitalWrite(PINO_STCP, LOW); // Prepara envio
+
+  shiftOut(PINO_DATA, PINO_SHCP, MSBFIRST, direcao); // Envia comando
+
+  digitalWrite(PINO_STCP, HIGH); // Executa
+}
+
+// ================== DESVIO DE OBSTÁCULO ==================
+void desviarObstaculo() {
+
+  LigarMotores(PARAR, 0); // Para antes de decidir
+  delay(100);
+
+  // Gira para direita
+  LigarMotores(DIREITA, VELOCIDADE);
+  delay(1000);
+
+  LigarMotores(PARAR, 0);
+  delay(100);
+
+  // Avança para contornar
+  LigarMotores(FRENTE, VELOCIDADE);
+  delay(1400);
+
+  LigarMotores(PARAR, 0);
+  delay(100);
+
+  // Corrige voltando para esquerda
+  LigarMotores(ESQUERDA, VELOCIDADE);
+  delay(1100);
+}
+
+// ================== SETUP ==================
+void setup() {
+
+  // Sensor ultrassônico
+  pinMode(PINO_TRIG, OUTPUT);
+  pinMode(PINO_ECHO, INPUT);
+
+  // Motores
+  pinMode(PINO_SHCP, OUTPUT);
+  pinMode(PINO_EN, OUTPUT);
+  pinMode(PINO_DATA, OUTPUT);
+  pinMode(PINO_STCP, OUTPUT);
+  pinMode(PINO_PWM1, OUTPUT);
+  pinMode(PINO_PWM2, OUTPUT);
+
+  // Sensores de linha
+  pinMode(SENSOR_ESQ, INPUT);
+  pinMode(SENSOR_CENTRO, INPUT);
+  pinMode(SENSOR_DIR, INPUT);
+
+  Serial.begin(115200); // Debug
+}
+
+// ================== LOOP ==================
+void loop() {
+
+  // Leitura dos sensores
+  Esq = analogRead(SENSOR_ESQ);
+  Centro = analogRead(SENSOR_CENTRO);
+  Dir = analogRead(SENSOR_DIR);
+
+  // Exibe valores no serial
+  Serial.print(Esq); Serial.print(",");
+  Serial.print(Centro); Serial.print(",");
+  Serial.println(Dir);
+
+  // ================== LÓGICA ==================
+
+  // Linha no centro → segue em frente
+  if (Esq &lt; LIMITE_PRETO && Centro &gt;= LIMITE_PRETO && Dir &lt; LIMITE_PRETO) {
+
+    LigarMotores(FRENTE, VELOCIDADE);
+
+    // Verifica obstáculo enquanto anda
+    float distancia = medirDistancia();
+
+    if (distancia &lt;= DISTANCIA_OBSTACULO) {
+      desviarObstaculo(); // Desvia
+      return;             // Evita executar resto do loop
+    }
+  }
+
+  // Linha puxando esquerda
+  else if (Esq &gt;= LIMITE_PRETO && Centro &gt;= LIMITE_PRETO && Dir &lt; LIMITE_PRETO) {
+    LigarMotores(ANTI_HORARIO, VELOCIDADE);
+  }
+
+  // Só esquerda detecta
+  else if (Esq &gt;= LIMITE_PRETO && Centro &lt; LIMITE_PRETO && Dir &lt; LIMITE_PRETO) {
+    LigarMotores(ANTI_HORARIO, VELOCIDADE);
+  }
+
+  // Só direita detecta
+  else if (Esq &lt; LIMITE_PRETO && Centro &lt; LIMITE_PRETO && Dir &gt;= LIMITE_PRETO) {
+    LigarMotores(HORARIO, VELOCIDADE);
+  }
+
+  // Direita + centro
+  else if (Esq &lt; LIMITE_PRETO && Centro &gt;= LIMITE_PRETO && Dir &gt;= LIMITE_PRETO) {
+    LigarMotores(HORARIO, VELOCIDADE);
+  }
+
+  // Tudo preto → parar
+  else if (Esq &gt;= LIMITE_PRETO && Centro &gt;= LIMITE_PRETO && Dir &gt;= LIMITE_PRETO) {
+    LigarMotores(PARAR, 0);
+  }
+}
+</pre>
+
+<pre>
+// Estabilização via hardware
+// giroscópio + desvio com sensor ultrassônico
+
+#include &lt;Servo.h&gt;
+
+// ==================== SERVO E SENSOR ====================
+Servo servoSensor;
+
+#define PINO_SERVO 9
+#define PINO_TRIG 12
+#define PINO_ECHO 13
+
+// ==================== CONTROLE DOS MOTORES (74HC595) ====================
+#define PINO_SHCP 2
+#define PINO_EN 7
+#define PINO_DATA 8
+#define PINO_STCP 4
+
+// ==================== PWM ====================
+#define PINO_PWM1 5
+#define PINO_PWM2 6
+
+// ==================== DIREÇÕES ====================
+const int FRENTE         = 92;
+const int RE             = 163;
+const int ESQUERDA       = 149;
+const int DIREITA        = 106;
+const int PARAR_MOTORES  = 0;
+
+// ==================== CONFIG ====================
+const int VELOCIDADE = 220;
+const float DISTANCIA_OBSTACULO = 20.0;
+
+// ==================== MEDIR DISTÂNCIA ====================
+float medirDistancia() {
+  digitalWrite(PINO_TRIG, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(PINO_TRIG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(PINO_TRIG, LOW);
+
+  float dist = pulseIn(PINO_ECHO, HIGH, 25000) / 58.0;
+
+  if (dist &lt;= 0 || dist &gt; 200) return 999;
+  return dist;
+}
+
+// ==================== MOTORES ====================
+void LigarMotores(int direcao, int velocidade) {
+  digitalWrite(PINO_EN, LOW);
+
+  analogWrite(PINO_PWM1, velocidade);
+  analogWrite(PINO_PWM2, velocidade);
+
+  digitalWrite(PINO_STCP, LOW);
+  shiftOut(PINO_DATA, PINO_SHCP, MSBFIRST, direcao);
+  digitalWrite(PINO_STCP, HIGH);
+}
+
+// ==================== DESVIO ====================
+void desviarObstaculo() {
+  LigarMotores(PARAR_MOTORES, 0);
+  delay(100);
+
+  LigarMotores(DIREITA, VELOCIDADE);
+  delay(1000);
+
+  LigarMotores(PARAR_MOTORES, 0);
+  delay(100);
+
+  LigarMotores(FRENTE, VELOCIDADE);
+  delay(1700);
+
+  LigarMotores(PARAR_MOTORES, 0);
+  delay(100);
+
+  LigarMotores(ESQUERDA, VELOCIDADE);
+  delay(1100);
+
+  LigarMotores(PARAR_MOTORES, 0);
+  delay(2000);
+}
+
+// ==================== SETUP ====================
+void setup() {
+  Serial.begin(9600);
+
+  servoSensor.attach(PINO_SERVO, 700, 2400);
+  servoSensor.write(90);
+
+  pinMode(PINO_TRIG, OUTPUT);
+  pinMode(PINO_ECHO, INPUT);
+
+  pinMode(PINO_SHCP, OUTPUT);
+  pinMode(PINO_EN, OUTPUT);
+  pinMode(PINO_DATA, OUTPUT);
+  pinMode(PINO_STCP, OUTPUT);
+
+  pinMode(PINO_PWM1, OUTPUT);
+  pinMode(PINO_PWM2, OUTPUT);
+
+  delay(400);
+}
+
+// ==================== LOOP ====================
+void loop() {
+  float distancia = medirDistancia();
+
+  if (distancia &gt; DISTANCIA_OBSTACULO) {
+    LigarMotores(FRENTE, VELOCIDADE);
+  } else {
+    desviarObstaculo();
+  }
+
+  delay(80);
+}
+</pre>
+
             <pre>// Funções auxiliares extras
 # extra</pre>
         </div>
